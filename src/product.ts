@@ -1,21 +1,15 @@
-interface Ifields {
-    id: number,
-    name: string,
-    price: number
-}
-
 
 class Product {
 
-    private tblProduct: Ifields[] = []
+    private tblProduct: IProductfields[] = []
 
-    constructor(product: any[]) {
+    constructor(product: IProductfields[]) {
         this.tblProduct = product
         console.log("product instance is created ...")
     }
 
     
-    add(product: Ifields) {
+    add(product: IProductfields) {
         this.tblProduct.push(product)
         return this
     }
@@ -42,8 +36,31 @@ class Product {
         return product
     }
 
+    //make purchase
+    /*
+    *@param product to add
+    *@param supplyProduct class
+    */
+    storePurchase(newProduct:IsupplyField){
+        //check if id exist in the table
+        const findId=this.tblProduct.some(product=>product.id===newProduct.product_id)
+        if(findId){
+           const tblSupply= new SupplyProduct()
+           tblSupply.purchase(newProduct)
+           console.log(tblSupply)
+        //    tblSupply.displayData()
+        }else{
+            console.log("this product doesnt exist !!")
+        }
+    }
+
+    
 
 }
+
+
+
+
 
 const product = new Product([])
 
@@ -52,7 +69,7 @@ product
     .add({ id: 2, name: "Energie", price: 16 })
 
 
-product.update(2, "Energie-plus-plus")
+product.storePurchase({id:1,product_id:2,quantity:22})
 
 console.log(product)
 
