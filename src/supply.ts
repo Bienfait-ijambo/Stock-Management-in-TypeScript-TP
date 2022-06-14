@@ -1,9 +1,11 @@
-class SupplyProduct {
 
-    public tblSupply: IsupplyField[]=[]
+import {entities as tbl} from './table/tables'
 
+export class SupplyProduct {
 
-   purchase(product:IsupplyField){
+    public tblSupply: tbl.IsupplyField[]=[]
+
+   purchase(product:tbl.IsupplyField){
       this.tblSupply.push(product)
       return this
    }
@@ -11,5 +13,6 @@ class SupplyProduct {
    displayData(){
       console.log( "----Inserted element"+this.tblSupply[0])
    }
+
 
 }

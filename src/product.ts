@@ -1,23 +1,40 @@
+import { entities as tbl } from './table/tables'
+import { category } from './category';
 
-class Product {
+ class Product {
 
-    private tblProduct: IProductfields[] = []
+    private static instance:Product
+    private tblProduct: tbl.IProductfields[] = []
 
-    constructor(product: IProductfields[]) {
+    constructor(product: tbl.IProductfields[]) {
         this.tblProduct = product
         console.log("product instance is created ...")
     }
 
-    
-    add(product: IProductfields) {
-        this.tblProduct.push(product)
-        return this
+    static getInstance(){
+        if(!Product.instance)
+            Product.instance=new Product([])
+        return this.instance
+    }
+
+
+    add(product: tbl.IProductfields, categoryId: number) {
+        //check argument
+        if (typeof product !== 'object' && typeof categoryId !== 'number')
+            throw TypeError("invalid argument!")
+ 
+        const doesExit = category.categories.some(el => el.id === categoryId)
+
+        doesExit ? this.tblProduct.push(product) : "Invalid category id, please check your category collection"
+
+      return this
     }
 
     edit(productId: number) {
         const product = this.tblProduct.filter(product => product.id === productId)
         return product
     }
+
 
     update(productId: number, productName?: string, productPrice?: number) {
         const product = this.tblProduct.filter(product => product.id === productId)
@@ -36,40 +53,34 @@ class Product {
         return product
     }
 
+
+
     //make purchase
-    /*
+    /** 
     *@param product to add
     *@param supplyProduct class
     */
-    storePurchase(newProduct:IsupplyField){
+    storePurchase(newProduct: tbl.IsupplyField) {
         //check if id exist in the table
-        const findId=this.tblProduct.some(product=>product.id===newProduct.product_id)
-        if(findId){
-           const tblSupply= new SupplyProduct()
-           tblSupply.purchase(newProduct)
-           console.log(tblSupply)
-        //    tblSupply.displayData()
-        }else{
-            console.log("this product doesnt exist !!")
-        }
+        // const findId=this.tblProduct.some(product=>product.id===newProduct.product_id)
+        // if(findId){
+        //    const tblSupply= new SupplyProduct()
+        //    tblSupply.purchase(newProduct)
+        //    console.log(tblSupply)
+        // //    tblSupply.displayData()
+        // }else{
+        //     console.log("this product doesnt exist !!")
+        // }
     }
 
-    
+
+
 
 }
 
 
+export const product=Product.getInstance()
 
 
 
-const product = new Product([])
-
-product
-    .add({ id: 1, name: "Jus", price: 12 })
-    .add({ id: 2, name: "Energie", price: 16 })
-
-
-product.storePurchase({id:1,product_id:2,quantity:22})
-
-console.log(product)
 

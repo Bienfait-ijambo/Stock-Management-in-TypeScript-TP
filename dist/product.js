@@ -1,24 +1,24 @@
 "use strict";
-class SupplyProduct {
-    constructor() {
-        this.tblSupply = [];
-    }
-    purchase(product) {
-        this.tblSupply.push(product);
-        return this;
-    }
-    displayData() {
-        console.log("----Inserted element" + this.tblSupply[0]);
-    }
-}
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.product = void 0;
+const category_1 = require("./category");
 class Product {
     constructor(product) {
         this.tblProduct = [];
         this.tblProduct = product;
         console.log("product instance is created ...");
     }
-    add(product) {
-        this.tblProduct.push(product);
+    static getInstance() {
+        if (!Product.instance)
+            Product.instance = new Product([]);
+        return this.instance;
+    }
+    add(product, categoryId) {
+        //check argument
+        if (typeof product !== 'object' && typeof categoryId !== 'number')
+            throw TypeError("invalid argument!");
+        const doesExit = category_1.category.categories.some(el => el.id === categoryId);
+        doesExit ? this.tblProduct.push(product) : "Invalid category id, please check your category collection";
         return this;
     }
     edit(productId) {
@@ -40,27 +40,21 @@ class Product {
         return product;
     }
     //make purchase
-    /*
+    /**
     *@param product to add
     *@param supplyProduct class
     */
     storePurchase(newProduct) {
         //check if id exist in the table
-        const findId = this.tblProduct.some(product => product.id === newProduct.product_id);
-        if (findId) {
-            const tblSupply = new SupplyProduct();
-            tblSupply.purchase(newProduct);
-            console.log(tblSupply);
-            //    tblSupply.displayData()
-        }
-        else {
-            console.log("this product doesnt exist !!");
-        }
+        // const findId=this.tblProduct.some(product=>product.id===newProduct.product_id)
+        // if(findId){
+        //    const tblSupply= new SupplyProduct()
+        //    tblSupply.purchase(newProduct)
+        //    console.log(tblSupply)
+        // //    tblSupply.displayData()
+        // }else{
+        //     console.log("this product doesnt exist !!")
+        // }
     }
 }
-const product = new Product([]);
-product
-    .add({ id: 1, name: "Jus", price: 12 })
-    .add({ id: 2, name: "Energie", price: 16 });
-product.storePurchase({ id: 1, product_id: 3, quantity: 22 });
-console.log(product);
+exports.product = Product.getInstance();
