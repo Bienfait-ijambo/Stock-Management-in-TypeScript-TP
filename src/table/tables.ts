@@ -4,7 +4,7 @@ export namespace entities{
         id: number,
         name: string,
         category_id:number,
-        price: number
+        price: number,
     }
 
     export interface ICategory {
@@ -31,6 +31,14 @@ export namespace entities{
         product_id:number,
         product_price:number,
         quantity:number  
+    }
+
+    export interface ICashIhistory{
+
+    }
+
+    export interface ICashDesk{
+
     }
 
   

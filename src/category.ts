@@ -16,6 +16,8 @@ class Category {
         return Category.instance
     }
 
+    
+
     add(category: tbl.ICategory) {
         if (typeof category !== 'object')
             throw TypeError("You must provide an object, invalid parameter")

@@ -1,16 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SupplyProduct = void 0;
-class SupplyProduct {
-    constructor() {
-        this.tblSupply = [];
+exports.supply = void 0;
+const product_1 = require("./product");
+class Supply {
+    constructor(supply) {
+        this.tblSupplies = [];
+        this.tblSupplies = supply;
     }
-    purchase(product) {
-        this.tblSupply.push(product);
+    static getInstance() {
+        if (!Supply.instance)
+            Supply.instance = new Supply([]);
+        return Supply.instance;
+    }
+    add(supply) {
+        const products = product_1.product.tblProduct;
+        const doesExit = products.some(product => product.id === supply.id);
+        if (typeof supply !== 'object')
+            throw new TypeError("Invalid argument, argument for add func should be an obj.");
+        if (!doesExit)
+            throw new Error("invalid Id");
+        this.tblSupplies.push(supply);
         return this;
     }
-    displayData() {
-        console.log("----Inserted element" + this.tblSupply[0]);
-    }
 }
-exports.SupplyProduct = SupplyProduct;
+exports.supply = Supply.getInstance();

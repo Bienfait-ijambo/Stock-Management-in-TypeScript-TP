@@ -1,33 +1,44 @@
 import { entities as tbl } from './table/tables'
-import { category } from './category';
+// import { category } from './category';
 
- class Product {
+//TODOS: 
+//-queryBuilder (select,join,transaction)
+//- to use type constrait
+//-to use enum for status colums
+//-to use promise for making transactions
+//-to protected object Id with proxy
 
-    private static instance:Product
-    private tblProduct: tbl.IProductfields[] = []
+class Product {
+
+    private static instance: Product
+    public tblProduct: tbl.IProductfields[] = []
 
     constructor(product: tbl.IProductfields[]) {
         this.tblProduct = product
         console.log("product instance is created ...")
     }
 
-    static getInstance(){
-        if(!Product.instance)
-            Product.instance=new Product([])
+    static getInstance() {
+        if (!Product.instance)
+            Product.instance = new Product([])
         return this.instance
     }
 
 
-    add(product: tbl.IProductfields, categoryId: number) {
+    add(product: tbl.IProductfields, categoryId: number, category: tbl.ICategory[]) {
+
+        const doesExit = category.some(el => el.id === categoryId)
+
         //check argument
-        if (typeof product !== 'object' && typeof categoryId !== 'number')
+        if (typeof product !== 'object' || typeof categoryId !== 'number')
             throw TypeError("invalid argument!")
- 
-        const doesExit = category.categories.some(el => el.id === categoryId)
 
-        doesExit ? this.tblProduct.push(product) : "Invalid category id, please check your category collection"
+        if (!doesExit)
+            throw new Error("Invalid category id, please check your category collection")
 
-      return this
+        this.tblProduct.push(product)
+
+        return this
     }
 
     edit(productId: number) {
@@ -55,31 +66,12 @@ import { category } from './category';
 
 
 
-    //make purchase
-    /** 
-    *@param product to add
-    *@param supplyProduct class
-    */
-    storePurchase(newProduct: tbl.IsupplyField) {
-        //check if id exist in the table
-        // const findId=this.tblProduct.some(product=>product.id===newProduct.product_id)
-        // if(findId){
-        //    const tblSupply= new SupplyProduct()
-        //    tblSupply.purchase(newProduct)
-        //    console.log(tblSupply)
-        // //    tblSupply.displayData()
-        // }else{
-        //     console.log("this product doesnt exist !!")
-        // }
-    }
-
-
 
 
 }
 
 
-export const product=Product.getInstance()
+export const product = Product.getInstance()
 
 
 

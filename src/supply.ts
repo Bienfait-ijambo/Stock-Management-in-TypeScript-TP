@@ -1,18 +1,42 @@
 
-import {entities as tbl} from './table/tables'
+import { entities as tbl } from './table/tables'
+import { product } from './product';
 
-export class SupplyProduct {
+class Supply {
 
-    public tblSupply: tbl.IsupplyField[]=[]
+   private static instance: Supply
+   public tblSupplies: tbl.IsupplyField[] = []
 
-   purchase(product:tbl.IsupplyField){
-      this.tblSupply.push(product)
+   constructor(supply: tbl.IsupplyField[]) {
+      this.tblSupplies = supply
+   }
+
+   static getInstance() {
+      if (!Supply.instance)
+         Supply.instance = new Supply([])
+      return Supply.instance
+   }
+
+   add(supply: tbl.IsupplyField) {
+
+      const products = product.tblProduct
+      const doesExit = products.some(product => product.id === supply.id)
+
+      if (typeof supply !== 'object')
+         throw new TypeError("Invalid argument, argument for add func should be an obj.")
+
+      if (!doesExit)
+         throw new Error("invalid Id")
+
+      this.tblSupplies.push(supply)
+
       return this
+
    }
 
-   displayData(){
-      console.log( "----Inserted element"+this.tblSupply[0])
-   }
+
 
 
 }
+
+export const supply = Supply.getInstance()
