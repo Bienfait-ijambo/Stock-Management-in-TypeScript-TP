@@ -2,7 +2,7 @@
 import { product } from "./product";
 import { category } from "./category";
 import {supply} from "./supply"
-
+import { stock } from './stock';
 
 category
     .add({id:1,name:"JUS"})
@@ -11,7 +11,7 @@ category
 // console.log(category.edit(2))
 
 console.log(category.categories)
-
+ 
 
 //add product
 try {
@@ -25,6 +25,21 @@ try {
 console.log(product)
 
 //supply
-supply.add({id:1,product_id:2,quantity:23})
+try {
 
-console.log(supply)
+    supply
+    .add({id:1,product_id:2,quantity:23})
+    .add({id:2,product_id:2,quantity:23})
+    .add({id:3,product_id:2,quantity:45})
+
+    
+    console.log(supply)
+} catch (error:any) {
+    console.log(error.message)
+}
+
+
+//stock
+stock.add(supply.tblSupplies)
+
+console.log(stock)

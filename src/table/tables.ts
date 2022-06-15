@@ -11,7 +11,7 @@ export namespace entities{
         id: number,
         name?:String
     }
-
+ 
     export interface IsupplyField{
         id:number,
         product_id:number,
@@ -19,7 +19,7 @@ export namespace entities{
     }
 
    export interface IStockField{
-        id:number,
+        id?:number,
         product_id:number,
         quantity:number,
         date?:string

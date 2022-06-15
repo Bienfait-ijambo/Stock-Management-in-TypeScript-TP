@@ -14,7 +14,7 @@ class Supply {
     }
     add(supply) {
         const products = product_1.product.tblProduct;
-        const doesExit = products.some(product => product.id === supply.id);
+        const doesExit = products.some(product => product.id === supply.product_id);
         if (typeof supply !== 'object')
             throw new TypeError("Invalid argument, argument for add func should be an obj.");
         if (!doesExit)
