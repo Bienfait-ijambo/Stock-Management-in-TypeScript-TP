@@ -1,8 +1,10 @@
 import { entities as tbl } from './table/tables'
+import {queryBuilder as q} from './views/query'
+
 // import { category } from './category';
 
 //TODOS: 
-//-queryBuilder (select,join,transaction)
+//-queryBuilder (select,join,groupBy)==for a better visualization
 //- to use type constrait
 //-to use enum for status colums
 //-to use promise for making transactions
@@ -62,6 +64,10 @@ class Product {
     delete(productId: number) {
         const product = this.tblProduct.filter(product => product.id !== productId)
         return product
+    }
+
+    select(array:any[],property:string[]){   
+      return  q.select(array,property)
     }
 
 

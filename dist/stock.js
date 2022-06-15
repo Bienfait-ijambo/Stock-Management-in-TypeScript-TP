@@ -13,10 +13,8 @@ class Stock {
         return Stock.instance;
     }
     add(stock) {
-        const tblStock = this.tblStock;
-        //add product to tblStock
         stock.forEach((product) => {
-            tblStock.push({
+            this.tblStock.push({
                 product_id: product.product_id,
                 quantity: product.quantity
             });

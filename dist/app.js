@@ -15,11 +15,13 @@ try {
     product_1.product
         .add({ id: 1, name: "Jus", price: 12, category_id: 2 }, 1, category_1.category.categories)
         .add({ id: 2, name: "Energie", price: 16, category_id: 2 }, 2, category_1.category.categories);
+    // property
+    console.log(product_1.product.select(product_1.product.tblProduct, ["price"]));
 }
 catch (error) {
     console.log(error.message);
 }
-console.log(product_1.product);
+// console.log(product)
 //supply
 try {
     supply_1.supply

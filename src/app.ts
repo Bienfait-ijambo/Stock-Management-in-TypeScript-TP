@@ -19,10 +19,14 @@ try {
     product
         .add({ id: 1, name: "Jus", price: 12,category_id:2 },1,category.categories)
         .add({ id: 2, name: "Energie", price: 16,category_id:2},2,category.categories)
+
+// property
+console.log(product.select(product.tblProduct,["price"]))
+
 } catch (error:any) {
     console.log(error.message)
 }
-console.log(product)
+// console.log(product)
 
 //supply
 try {

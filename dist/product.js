@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.product = void 0;
+const query_1 = require("./views/query");
 // import { category } from './category';
 //TODOS: 
-//-queryBuilder (select,join,transaction)
+//-queryBuilder (select,join,groupBy)==for a better visualization
 //- to use type constrait
 //-to use enum for status colums
 //-to use promise for making transactions
@@ -46,6 +47,9 @@ class Product {
     delete(productId) {
         const product = this.tblProduct.filter(product => product.id !== productId);
         return product;
+    }
+    select(array, property) {
+        return query_1.queryBuilder.select(array, property);
     }
 }
 exports.product = Product.getInstance();
